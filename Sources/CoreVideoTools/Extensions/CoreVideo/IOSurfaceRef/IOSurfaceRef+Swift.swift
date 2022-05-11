@@ -1,4 +1,4 @@
-import CoreVideo
+import Foundation
 
 public extension IOSurfaceRef {
     
@@ -74,7 +74,7 @@ public extension IOSurfaceRef {
     var bytesPerRow: Int { IOSurfaceGetBytesPerRow(self) }
     
     /// Returns the address of the first byte of data in a particular buffer.
-    /// /// - Returns: Returns `nil` if buffer is invalid.
+    /// - Returns: Returns `nil` if buffer is invalid.
     var baseAddress: UnsafeMutableRawPointer { IOSurfaceGetBaseAddress(self) }
     
     /// Returns the width (in pixels) of each element in a particular buffer.

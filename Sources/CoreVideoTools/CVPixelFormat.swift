@@ -1,5 +1,6 @@
 @_exported import CoreVideo
-@_exported import Foundation
+@_exported import IOSurface
+import Foundation
 
 public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
     /// 1 bit indexed

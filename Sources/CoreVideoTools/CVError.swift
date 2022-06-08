@@ -45,6 +45,8 @@ public enum CVError: Error, Equatable {
     /// A scan hasn't completely traversed the CVBufferPool due to a concurrent operation. The client can retry the scan.
     case retry
     
+    /// Initialize `CVError` value.
+    /// - Parameter rawValue: vanilla `CVReturn` value.
     public init(rawValue: CVReturn) {
         switch rawValue {
         case kCVReturnInvalidArgument: self = .invalidArgument
@@ -67,6 +69,7 @@ public enum CVError: Error, Equatable {
         }
     }
     
+    /// Vanilla `CVReturn` value.
     public var rawValue: CVReturn {
         switch self {
         case .error: return kCVReturnError

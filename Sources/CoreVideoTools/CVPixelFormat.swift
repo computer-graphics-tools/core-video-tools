@@ -216,6 +216,8 @@ public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
     case type_Lossy_422YpCbCr10PackedBiPlanarVideoRange
     case unknown
     
+    /// Initialize `CVPixelFormat`.
+    /// - Parameter rawValue: vanilla `OSType` value.
     public init(rawValue: OSType) {
         switch rawValue {
         case kCVPixelFormatType_1Monochrome: self = .type_1Monochrome
@@ -313,6 +315,7 @@ public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
         }
     }
     
+    /// Vanilla `OSType` value.
     public var rawValue: OSType {
         switch self {
         case .type_1Monochrome: return kCVPixelFormatType_1Monochrome
@@ -410,6 +413,7 @@ public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
         }
     }
     
+    /// The description of the pixel format.
     public var description: String {
         switch self {
         case .type_1Monochrome: return "1Monochrome"

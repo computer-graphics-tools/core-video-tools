@@ -1,6 +1,6 @@
 import CoreVideo
 
-extension CVReturn {
+public extension CVReturn {
     
     enum Result {
         case success

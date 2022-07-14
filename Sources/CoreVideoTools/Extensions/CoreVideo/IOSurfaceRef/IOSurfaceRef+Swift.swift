@@ -3,30 +3,147 @@ import Foundation
 public extension IOSurfaceRef {
     
     enum PropertyKey {
+        /// `CFNumber` of the total allocation size of the buffer including all planes.
+        ///
+        /// Defaults to BufferHeight. BytesPerRow if not specified. Must be specified for dimensionless buffers.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case allocSize
+        
+        /// `CFNumber` for the width of the `IOSurface` buffer in pixels.
+        ///
+        /// Required for planar `IOSurfaces`.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case width
+        
+        /// `CFNumber` for the height of the `IOSurface` buffer in pixels.
+        ///
+        /// Required for planar `IOSurfaces`.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case height
+        
+        /// `CFNumber` for the bytes per row of the buffer.
+        ///
+        /// If not specified, `IOSurface` will first calculate the number full elements required on each row (by rounding up),
+        /// multiplied by the bytes per element for this buffer.
+        /// That value will then be appropriately aligned.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case bytesPerRow
+        
+        /// `CFNumber` for the total number of bytes in an element.
+        ///
+        /// Default to 1.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case bytesPerElement
+        
+        /// `CFNumber` for how many pixels wide each element is.
+        ///
+        /// Defaults to 1.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case elementWidth
+        
+        /// `CFNumber` for how many pixels high each element is.
+        ///
+        /// Defaults to 1.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case elementHeight
+        
+        /// `CFNumber` for the starting offset into the buffer.
+        ///
+        /// Defaults to 0.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case offset
+        
+        /// `CFArray` describing each image plane in the buffer as a `CFDictionary`.
+        ///
+        /// The `CFArray` must have at least one entry.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeInfo
+        
+        /// `CFNumber` for the width of this plane in pixels.
+        ///
+        /// Required for image planes.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeWidth
+        
+        /// `CFNumber` for the height of this plane in pixels.
+        ///
+        /// Required for image planes.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeHeight
+        
+        /// `CFNumber` for the bytes per row of this plane.
+        ///
+        /// If not specified, `IOSurface` will first calculate the number full elements required on each row (by rounding up),
+        /// multiplied by the bytes per element for this plane.
+        /// That value will then be appropriately aligned.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeBytesPerRow
+        
+        /// `CFNumber` for the offset into the buffer for this plane.
+        ///
+        /// If not specified then `IOSurface` will lay out each plane sequentially based on the previous plane's allocation size.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeOffset
+        
+        /// `CFNumber` for the total data size of this plane.
+        ///
+        /// Defaults to plane height * plane bytes per row if not specified.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeSize
+        
+        /// `CFNumber` for the base offset into the buffer for this plane.
+        ///
+        /// Optional, defaults to the plane offset.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeBase
+        
+        /// `CFNumber` for the bits per element of this plane.
+        ///
+        /// Optional, default is 1.
+        /// For use in cases where `.planeBytesPerElement` doesn't allow sufficient precision.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeBitsPerElement
+        
+        /// `CFNumber` for the bytes per element of this plane.
+        ///
+        /// Optional, default is 1.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeBytesPerElement
+        
+        /// `CFNumber` for the element width of this plane.
+        ///
+        /// Optional, default is 1.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeElementWidth
+        
+        /// `CFNumber` for the element height of this plane.
+        ///
+        /// Optional, default is 1.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case planeElementHeight
+        
+        /// `CFNumber` for the CPU cache mode to be used for the allocation.
+        ///
+        /// Default is kIOMapDefaultCache.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case cacheMode
+        
+        /// A 32-bit unsigned integer that stores the traditional Mac OS X buffer format.
+        @available(iOS 11.0, macOS 10.6, macCatalyst 13.1, *)
         case pixelFormat
+        
+        /// If false the creator promises that there will be no pixel size casting when used on the GPU.  Default is true.
+        @available(iOS 11.0, macOS 10.12, macCatalyst 13.1, *)
         case pixelSizeCastingAllowed
+        
+        /// `CFArray[CFNumber]` for bit depth of each component in this plane.
+        @available(iOS 11.0, macOS 10.13, macCatalyst 13.1, *)
         case planeComponentBitDepths
+        
+        /// `CFArray[CFNumber]` for bit offset of each component in this plane, (low bit zero, high bit 7). For example 'BGRA' would be {0, 8, 16, 24}
+        @available(iOS 11.0, macOS 10.13, macCatalyst 13.1, *)
         case planeComponentBitOffsets
+        case unknown
         
         public var rawValue: CFString {
             switch self {
@@ -54,6 +171,37 @@ public extension IOSurfaceRef {
             case .pixelSizeCastingAllowed: return kIOSurfacePixelSizeCastingAllowed
             case .planeComponentBitDepths: return kIOSurfacePlaneComponentBitDepths
             case .planeComponentBitOffsets: return kIOSurfacePlaneComponentBitOffsets
+            case .unknown: return "" as CFString
+            }
+        }
+        
+        init(rawValue: CFString) {
+            switch rawValue {
+            case kIOSurfaceAllocSize: self = .allocSize
+            case kIOSurfaceWidth: self = .width
+            case kIOSurfaceHeight: self = .height
+            case kIOSurfaceBytesPerRow: self = .bytesPerRow
+            case kIOSurfaceBytesPerElement: self = .bytesPerElement
+            case kIOSurfaceElementWidth: self = .elementWidth
+            case kIOSurfaceElementHeight: self = .elementHeight
+            case kIOSurfaceOffset: self = .offset
+            case kIOSurfacePlaneInfo: self = .planeInfo
+            case kIOSurfacePlaneWidth: self = .planeWidth
+            case kIOSurfacePlaneHeight: self = .planeHeight
+            case kIOSurfacePlaneBytesPerRow: self = .planeBytesPerRow
+            case kIOSurfacePlaneOffset: self = .planeOffset
+            case kIOSurfacePlaneSize: self = .planeSize
+            case kIOSurfacePlaneBase: self = .planeBase
+            case kIOSurfacePlaneBitsPerElement: self = .planeBitsPerElement
+            case kIOSurfacePlaneBytesPerElement: self = .planeBytesPerElement
+            case kIOSurfacePlaneElementWidth: self = .planeElementWidth
+            case kIOSurfacePlaneElementHeight: self = .planeElementHeight
+            case kIOSurfaceCacheMode: self = .cacheMode
+            case kIOSurfacePixelFormat: self = .pixelFormat
+            case kIOSurfacePixelSizeCastingAllowed: self = .pixelSizeCastingAllowed
+            case kIOSurfacePlaneComponentBitDepths: self = .planeComponentBitDepths
+            case kIOSurfacePlaneComponentBitOffsets: self = .planeComponentBitOffsets
+            default: self = .unknown
             }
         }
     }
@@ -239,11 +387,14 @@ public extension IOSurfaceRef {
         IOSurfaceRemoveValue(self, key.rawValue)
     }
     
-    func set(values: CFDictionary) {
-        IOSurfaceSetValues(self, values)
+    func set(values: [PropertyKey: Any]) {
+        let cfValues = values.reduce(into: [:]) { $0[$1.key.rawValue] = $1.value } as CFDictionary
+        IOSurfaceSetValues(self, cfValues)
     }
-    func copyAllValues() -> CFDictionary? {
-        return IOSurfaceCopyAllValues(self)
+    func copyAllValues() -> [PropertyKey: Any]? {
+        guard let cfValues = IOSurfaceCopyAllValues(self) as? [CFString: Any]
+        else { return nil }
+        return cfValues.reduce(into: [:]) { $0[PropertyKey(rawValue: $1.key)] = $1.value }
     }
     func removeAllValues() {
         IOSurfaceRemoveAllValues(self)

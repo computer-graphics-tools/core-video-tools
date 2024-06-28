@@ -1,11 +1,16 @@
-import CoreVideo
-
+/// Extension on CVReturn to provide a more Swift-friendly error handling mechanism.
 public extension CVReturn {
-    
+
+    /// Represents the result of a CoreVideo operation.
     enum Result {
+        /// Indicates a successful operation.
         case success
+        /// Indicates an error occurred during the operation.
         case error(CVError)
-        
+
+        /// Throws an error if the result is not successful.
+        ///
+        /// - Throws: The associated `CVError` if the result is an error.
         func throwOnError() throws {
             switch self {
             case .success: return
@@ -13,7 +18,11 @@ public extension CVReturn {
             }
         }
     }
-    
+
+    /// Converts the CVReturn value to a Result enum.
+    ///
+    /// This property maps the raw CVReturn values to either a success case or
+    /// an error case with the corresponding CVError.
     var result: Result {
         switch self {
         case kCVReturnSuccess: return .success
@@ -36,4 +45,3 @@ public extension CVReturn {
         }
     }
 }
-

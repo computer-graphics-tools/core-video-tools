@@ -1,7 +1,6 @@
-@_exported import CoreVideo
-@_exported import IOSurface
 import Foundation
 
+/// Represents various pixel format types used in Core Video.
 public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
     /// 1 bit indexed
     case type_1Monochrome
@@ -215,9 +214,10 @@ public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
     /// Format is compressed-packed with no padding bits between pixels.
     case type_Lossy_422YpCbCr10PackedBiPlanarVideoRange
     case unknown
-    
-    /// Initialize `CVPixelFormat`.
-    /// - Parameter rawValue: vanilla `OSType` value.
+
+    /// Initializes a `CVPixelFormat` instance from a raw `OSType` value.
+    /// - Parameter rawValue: The raw `OSType` value representing a pixel format.
+    /// - Returns: The corresponding `CVPixelFormat` instance, or `.unknown` if the value is not recognized.
     public init(rawValue: OSType) {
         switch rawValue {
         case kCVPixelFormatType_1Monochrome: self = .type_1Monochrome
@@ -315,7 +315,7 @@ public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
         }
     }
     
-    /// Vanilla `OSType` value.
+    /// The raw `OSType` value corresponding to this pixel format.
     public var rawValue: OSType {
         switch self {
         case .type_1Monochrome: return kCVPixelFormatType_1Monochrome
@@ -413,7 +413,7 @@ public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
         }
     }
     
-    /// The description of the pixel format.
+    /// A human-readable description of the pixel format.
     public var description: String {
         switch self {
         case .type_1Monochrome: return "1Monochrome"

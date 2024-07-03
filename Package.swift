@@ -1,11 +1,11 @@
-// swift-tools-version: 5.4
+// swift-tools-version: 5.9
 
 import PackageDescription
 
 let package = Package(
     name: "core-video-tools",
     platforms: [
-        .iOS(.v11),
+        .iOS(.v12),
         .macOS(.v10_13)
     ],
     products: [
@@ -15,6 +15,10 @@ let package = Package(
         )
     ],
     targets: [
-        .target(name: "CoreVideoTools")
+        .target(name: "CoreVideoTools"),
+        .testTarget(
+            name: "CoreVideoToolsTests",
+            dependencies: ["CoreVideoTools"]
+        )
     ]
 )

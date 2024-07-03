@@ -1,7 +1,9 @@
 import CoreVideo
 
+/// Extension on CVPixelBuffer to provide convenient Swift-friendly methods and properties.
 public extension CVPixelBuffer {
-    
+
+    /// Enumeration of property keys for CVPixelBuffer.
     enum PropertyKey {
         /// A single CFNumber or a CFArray of CFNumbers (OSTypes)
         @available(iOS 4.0, macOS 10.4, macCatalyst 13.1, *)
@@ -189,6 +191,8 @@ public extension CVPixelBuffer {
         
         case unknown
         
+        /// Initializes a PropertyKey from a raw CFString value.
+        /// - Parameter rawValue: The raw CFString value representing a property key.
         init(rawValue: CFString) {
             var propertyKey = PropertyKey.unknown
             
@@ -269,6 +273,7 @@ public extension CVPixelBuffer {
             self = propertyKey
         }
         
+        /// The raw CFString value corresponding to this property key.
         public var rawValue: CFString {
             var rawValue = "" as CFString
             

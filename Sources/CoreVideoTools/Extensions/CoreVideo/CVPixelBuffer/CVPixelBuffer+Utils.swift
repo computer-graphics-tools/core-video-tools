@@ -1,5 +1,3 @@
-import CoreVideo
-
 public extension CVPixelBuffer {
     
     /// Creates a pixel buffer with the same parameters.

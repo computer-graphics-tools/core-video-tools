@@ -1,6 +1,4 @@
-import CoreVideo
-
-/// CoreVideo specific error codes
+/// Represents CoreVideo specific error codes.
 public enum CVError: Error, Equatable {
     /// An otherwise undefined error occurred.
     case error
@@ -8,6 +6,7 @@ public enum CVError: Error, Equatable {
     case invalidArgument
     /// The allocation for a buffer or buffer pool failed. Most likely because of lack of resources.
     case allocationFailed
+    /// The operation or feature is not supported.
     case unsupported
     
     // DisplayLink related errors
@@ -23,15 +22,15 @@ public enum CVError: Error, Equatable {
     
     // Buffer related errors
     
-    /// The requested pixelformat is not supported for the CVBuffer type.
+    /// The requested pixel format is not supported for the CVBuffer type.
     case invalidPixelFormat
     /// The requested size (most likely too big) is not supported for the CVBuffer type.
     case invalidSize
     /// A CVBuffer cannot be created with the given attributes.
     case invalidPixelBufferAttributes
-    /// The Buffer cannot be used with OpenGL as either its size, pixelformat or attributes are not supported by OpenGL.
+    /// The Buffer cannot be used with OpenGL as either its size, pixel format or attributes are not supported by OpenGL.
     case pixelBufferNotOpenGLCompatible
-    /// The Buffer cannot be used with Metal as either its size, pixelformat or attributes are not supported by Metal.
+    /// The Buffer cannot be used with Metal as either its size, pixel format or attributes are not supported by Metal.
     case pixelBufferNotMetalCompatible
     
     // Buffer Pool related errors
@@ -45,8 +44,9 @@ public enum CVError: Error, Equatable {
     /// A scan hasn't completely traversed the CVBufferPool due to a concurrent operation. The client can retry the scan.
     case retry
     
-    /// Initialize `CVError` value.
-    /// - Parameter rawValue: vanilla `CVReturn` value.
+    /// Initializes a `CVError` value from a raw `CVReturn` value.
+    /// - Parameter rawValue: The vanilla `CVReturn` value.
+    /// - Returns: The corresponding `CVError` instance.
     public init(rawValue: CVReturn) {
         switch rawValue {
         case kCVReturnInvalidArgument: self = .invalidArgument
@@ -69,7 +69,7 @@ public enum CVError: Error, Equatable {
         }
     }
     
-    /// Vanilla `CVReturn` value.
+    /// The raw `CVReturn` value corresponding to this `CVError`.
     public var rawValue: CVReturn {
         switch self {
         case .error: return kCVReturnError

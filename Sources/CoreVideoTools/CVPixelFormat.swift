@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents various pixel format types used in Core Video.
-public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable {
+public enum CVPixelFormat: CustomStringConvertible, CaseIterable, Codable, Sendable, Equatable, Hashable {
     /// 1 bit indexed
     case type_1Monochrome
     /// 2 bit indexed

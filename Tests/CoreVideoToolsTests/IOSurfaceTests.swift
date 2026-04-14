@@ -65,7 +65,7 @@ final class IOSurfaceTests: XCTestCase {
             bytesPerElement: 4,
             bytesPerRow: 0
         )) { error in
-            XCTAssertEqual(error as? CVError, .error)
+            XCTAssertEqual(error as? CoreVideoTools.CVError, .error)
         }
 
         XCTAssertThrowsError(try IOSurface.create(
@@ -75,7 +75,7 @@ final class IOSurfaceTests: XCTestCase {
             bytesPerElement: 4,
             bytesPerRow: 640 * 4
         )) { error in
-            XCTAssertEqual(error as? CVError, .error)
+            XCTAssertEqual(error as? CoreVideoTools.CVError, .error)
         }
     }
 
@@ -87,7 +87,7 @@ final class IOSurfaceTests: XCTestCase {
             bytesPerElement: 0,
             bytesPerRow: 640 * 4
         )) { error in
-            XCTAssertEqual(error as? CVError, .error)
+            XCTAssertEqual(error as? CoreVideoTools.CVError, .error)
         }
     }
 
@@ -99,7 +99,7 @@ final class IOSurfaceTests: XCTestCase {
             bytesPerElement: 4,
             bytesPerRow: 100  // Too small for the width
         )) { error in
-            XCTAssertEqual(error as? CVError, .error)
+            XCTAssertEqual(error as? CoreVideoTools.CVError, .error)
         }
     }
 

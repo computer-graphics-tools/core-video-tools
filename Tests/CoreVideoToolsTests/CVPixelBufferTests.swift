@@ -16,6 +16,38 @@ final class CVPixelBufferTests: XCTestCase {
         XCTAssertEqual(pixelBuffer.cvPixelFormat, .type_32BGRA)
     }
 
+    func testIOSurfaceBackedPixelBuffer() throws {
+        let pixelBuffer = try CVPixelBuffer.create(
+            width: 640,
+            height: 480,
+            cvPixelFormat: .type_32BGRA,
+            attachments: [.iOSurfaceProperties: [String: Any]()]
+        )
+        let ioSurface = try XCTUnwrap(pixelBuffer.ioSurface)
+
+        XCTAssertNotEqual(ioSurface.surfaceID, 0)
+        XCTAssertEqual(ioSurface.surfaceID, pixelBuffer.ioSurface?.surfaceID)
+    }
+
+    func testPixelBufferPool() throws {
+        let pool = try CVPixelBufferPool.create(
+            pixelBufferAttributes: [
+                .pixelFormatType: CVPixelFormat.type_420YpCbCr8BiPlanarFullRange.rawValue,
+                .width: 640,
+                .height: 480,
+                .iOSurfaceProperties: [String: Any](),
+                .metalCompatibility: true,
+            ],
+            poolAttributes: [.minimumBufferCount: 2]
+        )
+        let pixelBuffer = try pool.makePixelBuffer()
+
+        XCTAssertEqual(pixelBuffer.width, 640)
+        XCTAssertEqual(pixelBuffer.height, 480)
+        XCTAssertEqual(pixelBuffer.cvPixelFormat, .type_420YpCbCr8BiPlanarFullRange)
+        XCTAssertNotNil(pixelBuffer.ioSurface)
+    }
+
     func testPixelBufferProperties() throws {
         let pixelBuffer = try CVPixelBuffer.create(width: 1920, height: 1080, cvPixelFormat: .type_32BGRA)
         XCTAssertEqual(pixelBuffer.width, 1920)

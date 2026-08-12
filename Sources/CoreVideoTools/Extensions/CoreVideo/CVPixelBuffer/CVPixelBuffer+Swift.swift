@@ -4,7 +4,7 @@ import CoreVideo
 public extension CVPixelBuffer {
 
     /// Enumeration of property keys for CVPixelBuffer.
-    enum PropertyKey {
+    enum PropertyKey: Sendable {
         /// A single CFNumber or a CFArray of CFNumbers (OSTypes)
         @available(iOS 4.0, macOS 10.4, macCatalyst 13.1, *)
         case pixelFormatType
@@ -367,6 +367,12 @@ public extension CVPixelBuffer {
     
     /// The height of the PixelBuffer.
     var height: Int { CVPixelBufferGetHeight(self) }
+
+    /// The IOSurface backing the pixel buffer, when one was requested at creation time.
+    @available(iOS 4.0, macOS 10.6, macCatalyst 13.1, tvOS 9.0, watchOS 4.0, *)
+    var ioSurface: IOSurface? {
+        CVPixelBufferGetIOSurface(self)?.takeUnretainedValue()
+    }
     
     /// The `CVPixelFormat` of the PixelBuffer.
     var cvPixelFormat: CVPixelFormat { .init(rawValue: CVPixelBufferGetPixelFormatType(self)) }

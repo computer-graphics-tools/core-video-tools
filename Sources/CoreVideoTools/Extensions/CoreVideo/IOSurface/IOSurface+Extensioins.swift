@@ -1,5 +1,11 @@
 public extension IOSurface {
 
+    /// The system-wide identifier of the IOSurface.
+    @available(iOS 11.0, macOS 10.12, macCatalyst 13.1, tvOS 11.0, watchOS 4.0, *)
+    var surfaceID: IOSurfaceID {
+        IOSurfaceGetID(self as IOSurfaceRef)
+    }
+
     /// Describes the cache mode for an IOSurface.
     ///
     /// This enum provides a Swift-friendly interface to the IOSurface cache mode options.

@@ -17,5 +17,8 @@ jobs:
     - name: Build
       run: swift build
 
+    - name: Build for tvOS Simulator
+      run: xcodebuild -scheme core-video-tools -destination 'generic/platform=tvOS Simulator' build
+
     - name: Run Tests
       run: swift test

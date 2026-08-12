@@ -6,7 +6,8 @@ let package = Package(
     name: "core-video-tools",
     platforms: [
         .iOS(.v12),
-        .macOS(.v10_13)
+        .macOS(.v10_13),
+        .tvOS(.v12)
     ],
     products: [
         .library(

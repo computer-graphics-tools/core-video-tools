@@ -64,7 +64,8 @@ public extension CVPixelBuffer {
         /// CFBoolean
         @available(iOS 8.0, macOS 10.11, macCatalyst 13.1, *)
         case metalCompatibility
-        
+
+        #if os(iOS) || os(macOS)
         /// Buffer attachment key for code indicating Bayer pattern (sensel arrangement).
         ///
         /// Associated attachment is a CFNumber of type kCFNumberSInt32Type.
@@ -166,7 +167,8 @@ public extension CVPixelBuffer {
         /// The CFData contains a big-endian uint32 representing the size of the item in bytes followed by a 4-character code ('psim') followed by a variable-length pascal string identifying the metadata (like a key string) followed by the metadata payload.
         @available(iOS 15.0, macOS 12.0, macCatalyst 15.0, *)
         case proResRAWMetadataExtension
-        
+        #endif
+
         #if os(iOS) && !targetEnvironment(macCatalyst)
         /// CFBoolean
         @available(iOS 6.0, *)
@@ -223,6 +225,7 @@ public extension CVPixelBuffer {
                 }
             }
             
+            #if os(iOS) || os(macOS)
             if #available(iOS 14.0, macOS 11.0, macCatalyst 14.0, *) {
                 switch rawValue {
                 case kCVPixelBufferVersatileBayerKey_BayerPattern: propertyKey = .versatileBayerPattern
@@ -245,7 +248,8 @@ public extension CVPixelBuffer {
                 default: break
                 }
             }
-            
+            #endif
+
             #if os(iOS) && !targetEnvironment(macCatalyst)
             if #available(iOS 6.0, *) {
                 switch rawValue {
@@ -304,6 +308,7 @@ public extension CVPixelBuffer {
                 }
             }
             
+            #if os(iOS) || os(macOS)
             if #available(iOS 14.0, macOS 11.0, macCatalyst 14.0, *) {
                 switch self {
                 case .versatileBayerPattern: rawValue = kCVPixelBufferVersatileBayerKey_BayerPattern
@@ -326,7 +331,8 @@ public extension CVPixelBuffer {
                 default: break
                 }
             }
-            
+            #endif
+
             #if os(iOS) && !targetEnvironment(macCatalyst)
             if #available(iOS 6.0, *) {
                 switch self {
@@ -509,7 +515,7 @@ public extension CVPixelBuffer {
     /// Can be used to create similar pixelbuffers.
     ///
     /// - Returns: A copy of pixelBufferAttributes dictionary.
-    @available(iOS 15.0, macOS 12.0, *)
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     @discardableResult
     func copyCreationAttributes() -> [PropertyKey: Any] {
         let cfAttributes = CVPixelBufferCopyCreationAttributes(self) as? [CFString: Any] ?? [:]

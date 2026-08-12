@@ -1,7 +1,11 @@
 public extension IOSurface {
 
     /// The system-wide identifier of the IOSurface.
-    @available(iOS 11.0, macOS 10.12, macCatalyst 13.1, tvOS 11.0, watchOS 4.0, *)
+    @available(iOS, introduced: 11.0, obsoleted: 18.0)
+    @available(macOS, introduced: 10.12, obsoleted: 15.0)
+    @available(macCatalyst, introduced: 13.1, obsoleted: 18.0)
+    @available(tvOS, introduced: 11.0, obsoleted: 18.0)
+    @available(watchOS, introduced: 4.0, obsoleted: 11.0)
     var surfaceID: IOSurfaceID {
         IOSurfaceGetID(self as IOSurfaceRef)
     }
